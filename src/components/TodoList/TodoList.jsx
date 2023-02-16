@@ -11,14 +11,29 @@ export default function TodoList() {
     setTodos([...todos, todo]);
   };
 
+  const handleDel = (itemId) => {
+    setTodos(todos.filter((el) => el.id !== itemId));
+  };
+
   return (
     <section>
       <ul>
         {todos.map((item) => (
-          <li key={item.id}>{item.text}</li>
+          <li key={item.id}>
+            <input type="checkbox"></input>
+            {item.text}
+            <Button onDel={handleDel} itemId={item.id} />
+          </li>
         ))}
       </ul>
       <AddTodo onAdd={handleAdd} />
     </section>
   );
+}
+
+function Button({ onDel, itemId }) {
+  const handleClick = () => {
+    onDel(itemId);
+  };
+  return <button onClick={handleClick}>x</button>;
 }
